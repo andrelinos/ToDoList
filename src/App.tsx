@@ -1,24 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect, FormEvent } from 'react';
+
 import './App.css';
 
-function App() {
+
+
+const App: React.FC = () => {
+  const [field, setField] = useState('');
+
+  useEffect(() => {
+   const item = localStorage.getItem('@TODOList:item');
+    console.log(item)
+  }, []);
+
+  function handleAddToDo(e:FormEvent) {
+    e.preventDefault();
+    localStorage.setItem('@TODOList:item', JSON.stringify(field));
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <form id="to-do-form" onSubmit={handleAddToDo}>
+          <input 
+            type="text" 
+            placeholder="Enter text" 
+            name="field"
+            value={field}
+            maxLength={156}
+            onChange={(e) => { setField(e.target.value) }}            
+          />
+          <button type="submit">Add</button>
+        </form>
       </header>
+      <main>
+        <div className="todos-container">
+            <p>Lorem ipsum dolor sit amet convitae.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi hic architecto ratione minima quis exercitationem autem expedita quos ex vitae.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi hic architecto ratione minima quis exercitationem autem expedita quos ex vitae.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi hic architecto ratione minima quis exercitationem autem expedita quos ex vitae.</p>
+        </div>
+      </main>
     </div>
   );
 }
